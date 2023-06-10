@@ -1,0 +1,27 @@
+package com.ust.lombok;
+
+public class GetterLazy {
+
+    private final AtomicReference<Object> transactions = new AtomicReference();
+
+    public GetterLazy() {
+    }
+
+    //other methods
+
+    public Map<String, Long> getTransactions() {
+        Object value = this.transactions.get();
+        if (value == null) {
+            synchronized(this.transactions) {
+                value = this.transactions.get();
+                if (value == null) {
+                    Map<String, Long> actualValue = this.readTxnsFromFile();
+                    value = actualValue == null ? this.transactions : actualValue;
+                    this.transactions.set(value);
+                }
+            }
+        }
+
+        return (Map)((Map)(value == this.transactions ? null : value));
+    }
+}

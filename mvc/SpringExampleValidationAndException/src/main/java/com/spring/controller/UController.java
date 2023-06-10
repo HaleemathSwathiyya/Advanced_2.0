@@ -1,0 +1,59 @@
+package com.spring.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.spring.entity.User;
+import com.spring.exception.UserNotFoundException;
+import com.spring.services.UService;
+
+@RestController
+@RequestMapping("/user")
+@Validated
+public class UController {
+	
+	@Autowired
+	UService uservice;
+	
+	@PostMapping("/create")
+	public ResponseEntity<User> addValues(@RequestBody @Valid User user) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(uservice.addValue(user));
+	}
+	
+	@GetMapping("/retrieveAll")
+	public ResponseEntity<List<User>> getValues() {
+		return ResponseEntity.ok(uservice.getValue());
+	}
+	
+	@GetMapping("/retrieve/{id}")
+	public Optional <User> getByID(@PathVariable long id) throws UserNotFoundException {
+		return uservice.getByID(id);
+		
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public Optional<User> deleteByID(@PathVariable long id) {
+		return uservice.deleteByID(id);
+	}
+	
+	@PutMapping("/update")
+	public User updateUser(@RequestBody User user) {
+		return uservice.updateUser(user);
+	}
+
+}

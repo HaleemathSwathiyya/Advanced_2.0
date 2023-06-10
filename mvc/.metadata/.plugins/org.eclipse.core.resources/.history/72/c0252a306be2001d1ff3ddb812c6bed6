@@ -1,0 +1,9 @@
+server.port=8090
+#logging.level.org.springframework=TRACE
+#logging.level.org.springframework=off
+#logging.level.root=off
+
+#logging.file.path=d:/bootlogs  
+logging.level.org.springframework.web=debug
+logging.level.org.hibernate=error
+logging.file.name=appLogs.log

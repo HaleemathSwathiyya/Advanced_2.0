@@ -1,0 +1,5 @@
+package com.ust.firstrestmysqljpa2.resources;
+
+public class ProductResource {
+
+}

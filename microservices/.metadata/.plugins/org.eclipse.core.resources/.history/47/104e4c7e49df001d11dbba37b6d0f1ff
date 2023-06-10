@@ -1,0 +1,61 @@
+package com.ust.rest;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@SpringBootApplication
+@EnableSwagger2 // and from browser call http://localhost:8090/swagger-ui
+//@ComponentScan(basePackage = {,})
+
+//@RestController
+//@RequestMapping("/test")
+public class FirstrestApplication implements CommandLineRunner{
+
+	public static void main(String[] args) {
+		SpringApplication.run(FirstrestApplication.class, args);
+	}
+	
+@Override public void run(String...args) throws Exception {
+	System.out.println("fromCommandLineRunner");
+}
+
+	
+	@GetMapping("/first")
+//	@RequestMapping("/first")
+	public String respond() {
+		return "my first REST Controller";
+	}
+	
+	@GetMapping("/second") 
+//	@RequestMapping("/second")
+	public String message() {
+		return "today we want break";
+	}
+	
+	@GetMapping("/third/{custname}")
+		public String greetings(@PathVariable String custname) {
+		return "Hello Dear" +custname;
+	}
+	
+	@GetMapping("/forth/{custname}/gender/{gen}")
+		public String greetings(@PathVariable String custname, @PathVariable String gen) {
+		if(gen.equals("male")) {
+			return "Hello Mr." + custname;
+		}
+		else if(gen.equals("female")) {
+			return "Hello Ms." + custname;
+		}
+		else {
+			return "Hello" + custname;
+		}
+	}
+	
+
+}

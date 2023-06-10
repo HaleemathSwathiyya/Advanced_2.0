@@ -1,0 +1,5 @@
+package com.ust.firstrestmysqljpa2.services;
+
+public class ProductService {
+
+}
